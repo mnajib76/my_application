@@ -4,12 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:todoeyapp/models/tasks_data.dart';
 
 class AddNewTaskScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     String newTask;
     return Container(
-      padding: EdgeInsets.only(left: 30,right: 30,top: 30),
+      padding: EdgeInsets.only(left: 30, right: 30, top: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -25,18 +24,22 @@ class AddNewTaskScreen extends StatelessWidget {
           TextField(
             autofocus: true,
             textAlign: TextAlign.center,
-            onChanged: (value){
+            onChanged: (value) {
               newTask = value;
             },
           ),
           FlatButton(
-            child: Text('Add',style: TextStyle(color: Colors.white),),
-            color: Colors.lightBlueAccent,
-            onPressed: (){
-              Provider.of<TasksData>(context,listen: false).addNewTask(newTask);
-              Navigator.pop(context);
-            }
-          ),
+              child: Text(
+                'Add',
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.lightBlueAccent,
+              onPressed: () {
+                if (newTask != null) {
+                  Provider.of<TasksData>(context, listen: false).addNewTask(newTask);
+                }
+                Navigator.pop(context);
+              }),
         ],
       ),
     );

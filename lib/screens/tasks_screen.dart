@@ -6,13 +6,15 @@ import 'package:provider/provider.dart';
 import 'package:todoeyapp/models/tasks_data.dart';
 
 class TasksScreen extends StatelessWidget {
-  
+
   @override
   Widget build(BuildContext context) {
     return StatefulWrapper(
-      onInit: ()async => await TasksData().readSavedTasks(),
+      onInit: ()async{
+        await Provider.of<TasksData>(context).readSavedTasks();
+      },
       child: Scaffold(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.blueAccent,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -25,7 +27,7 @@ class TasksScreen extends StatelessWidget {
                     child: Icon(
                       Icons.list,
                       size: 30,
-                      color: Colors.lightBlueAccent,
+                      color: Colors.blueAccent,
                     ),
                     radius: 30,
                     backgroundColor: Colors.white,
@@ -34,7 +36,7 @@ class TasksScreen extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    'Todoey',
+                    'Tododay',
                     style: TextStyle(
                       fontSize: 50,
                       color: Colors.white,
@@ -42,7 +44,7 @@ class TasksScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${Provider.of<TasksData>(context).taskCount} tasks remaining',
+                    '${Provider.of<TasksData>(context).taskCount()} tasks remaining',
                     style: TextStyle(
                       fontSize: 15,
                       color: Colors.white,
@@ -67,7 +69,7 @@ class TasksScreen extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: Colors.blueAccent,
           child: Icon(Icons.add),
           onPressed: () {
             showModalBottomSheet(
@@ -96,19 +98,14 @@ class TasksScreen extends StatelessWidget {
   }
 }
 
-
 class StatefulWrapper extends StatefulWidget {
   final Function onInit;
   final Widget child;
-
   const StatefulWrapper({@required this.onInit, @required this.child});
-
   @override
   _StatefulWrapperState createState() => _StatefulWrapperState();
 }
-
 class _StatefulWrapperState extends State<StatefulWrapper> {
-
   @override
   void initState() {
     if(widget.onInit != null) {
@@ -116,7 +113,6 @@ class _StatefulWrapperState extends State<StatefulWrapper> {
     }
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return widget.child;
